@@ -86,10 +86,9 @@ module.exports.ASK_QUESTION= (req,res) =>{
 
             module.exports.DELETE_ANSWER_BY_ID= async(req,res)=>{
                 questionSchema.updateOne({answersIds: req.params.id},{$pull:{answersIds: req.params.id}})
-                .then((result) => {
+                .then(() => {
                     return res.status(200).json({
-                      statusMessage: "Answer was deleted succesfully",
-                      deletedAnswer: result,
+                      statusMessage: "Answer was deleted successfully",
                     });
                   })
                   .catch((err) => {
