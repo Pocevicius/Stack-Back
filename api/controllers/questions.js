@@ -85,11 +85,17 @@ module.exports.ASK_QUESTION= (req,res) =>{
                 }
 
             module.exports.DELETE_ANSWER_BY_ID= async(req,res)=>{
-                
-                questionSchema.findOneAndDelete({answersIds: req.params.id})
-                
+                questionSchema.updateOne({answersIds: req.params.id},{$pull:{answersIds: req.params.id}})
+                .then((result) => {
                     return res.status(200).json({
-                        statusMessage: "Answer was deleted successfully"
-                      });
+                      statusMessage: "Answer was deleted succesfully",
+                      deletedAnswer: result,
+                    });
+                  })
+                  .catch((err) => {
+                    console.log("err", err);
+                    res.status(404).json({ response: "Something went wrong" });
+                  });
+
                     }
                 
