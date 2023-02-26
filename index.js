@@ -1,13 +1,29 @@
-import express from "express";
-import bodyParser from "body-parser";
-import mongoose from "mongoose";
-import dotenv from "dotenv"
-mongoose.set("strictQuery", false);
+const express = require("express");
+const bodyParser = require("body-parser");
+const usersRoutes = require("./api/routes/user");
+const questionRoutes= require("./api/routes/questions")
+const mongoose = require("mongoose");
+require("dotenv").config();
 
 const app = express();
 
+var cors = require("cors");
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors());
+
+mongoose.set("strictQuery", false);
+mongoose
+  .connect(process.env.MONGO_CONNECTION, { useNewUrlParser: true })
+  .then(console.log("connected"))
+  .catch((err) => {
+    console.log("fak this");
+    console.log(err);
+  });
+
+app.use(questionRoutes);
+app.use(usersRoutes);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -19,16 +35,4 @@ app.use((req, res, next) => {
   next();
 });
 
-dotenv.config();
-mongoose
-  .connect(process.env.MONGO_CONNECTION, { useNewUrlParser: true })
-  .then(console.log("connected to the fucking database"))
-  .catch((err) => {
-    console.log("Connection error");
-    console.log(err);
-  });
-
-// app.use(userRoutes);
-// app.use(questionsRoutes);
-
-app.listen(3001);
+app.listen(3000);

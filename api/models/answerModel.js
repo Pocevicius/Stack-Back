@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const answerSchema=mongoose.Schema({
     answerContent:{type:String,required:true},
     dataCreated:{type:String},
     questionId:{type:String}
 })
-export default mongoose.model("Answer", answerSchema);
+module.exports= mongoose.model("Answer", answerSchema);

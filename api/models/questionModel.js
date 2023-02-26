@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const questionSchema=mongoose.Schema({
     title:{type:String,required: true},
-    dataCreated:{type:String},
+    dataCreated:{type:Date},
     answersIds:{type:Array},
     answered:{type:Boolean}
 }
 )
-export default mongoose.model("Question",questionSchema);
+module.exports= mongoose.model("Question",questionSchema);
