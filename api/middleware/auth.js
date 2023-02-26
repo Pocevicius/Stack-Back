@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
+const jwt=require ("jsonwebtoken");
 
-export default function auth(req, res, next) {
+module.exports=function auth(req, res, next) {
   const token = req.headers.authorization;
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
