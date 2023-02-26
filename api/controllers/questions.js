@@ -34,6 +34,19 @@ module.exports.ASK_QUESTION= (req,res) =>{
             res.status(404).json({ response: "Something went wrong" });
           });
     }
+
+    module.exports.FILTER_QUESTIONS= async (req,res)=>{
+        questionSchema.find()
+        .then((result) => {
+           const answered= result.sort(value=>{return value ? 1 :-1})
+            return res.status(200).json(answered);
+          })
+          .catch((err) => {
+            console.log("err", err);
+            res.status(404).json({ response: "Something went wrong" });
+          });
+    }
+
     module.exports.DELETE_QUESTION_BY_ID=async (req,res)=>{
         questionSchema.deleteOne({_id:req.params.id})
         .then(()=>{
