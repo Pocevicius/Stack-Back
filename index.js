@@ -11,7 +11,7 @@ var cors = require("cors");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({origin: true, credentials: true}));
 
 mongoose.set("strictQuery", false);
 mongoose
